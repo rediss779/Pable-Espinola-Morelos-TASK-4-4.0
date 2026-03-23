@@ -1,0 +1,29 @@
+import java.sql.*;
+import java.util.*;
+
+public class Repository {
+    private static final String URL = "jdbc:sqlite:src/sqlinheritance.db";
+
+    public List<Hardware> fetchAll() {
+        List<Hardware> list = new ArrayList<>();
+        String sql = "SELECT ID, Brand, Spec, Type FROM Gadgets";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Hardware hw = new Hardware.Builder()
+                        .setID(rs.getInt("ID"))
+                        .setBRAND(rs.getString("Brand"))
+                        .setSPEC(rs.getInt("Spec"))
+                        .setTYPE(rs.getString("Type"))
+                        .build();
+                list.add(hw);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+}
