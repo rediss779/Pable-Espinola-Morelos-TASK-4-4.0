@@ -1,0 +1,11 @@
+public class Phone extends Hardware {
+    // Constructor must be package-private or public so Builder can access
+    Phone(Builder builder) {
+        super(builder);
+    }
+
+    @Override
+    public String interpretSpec() {
+        return SPEC + " Megapixels";
+    }
+}

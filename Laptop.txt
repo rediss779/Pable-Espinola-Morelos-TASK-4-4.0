@@ -1,0 +1,11 @@
+public class Laptop extends Hardware {
+    // Constructor must be package-private or public so Builder can access
+    Laptop(Builder builder) {
+        super(builder);
+    }
+
+    @Override
+    public String interpretSpec() {
+        return SPEC + "GB RAM";
+    }
+}
