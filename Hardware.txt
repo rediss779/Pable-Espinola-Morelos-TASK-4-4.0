@@ -1,0 +1,50 @@
+public class Hardware {
+    // Encapsulated fields (ALL CAPS)
+    protected final int ID;
+    protected final String BRAND;
+    protected final int SPEC;
+    protected final String TYPE;
+
+    // Protected constructor (fixes the access issue)
+    protected Hardware(Builder builder) {
+        this.ID = builder.ID;
+        this.BRAND = builder.BRAND;
+        this.SPEC = builder.SPEC;
+        this.TYPE = builder.TYPE;
+    }
+
+    // Getters
+    public int getID() { return ID; }
+    public String getBRAND() { return BRAND; }
+    public int getSPEC() { return SPEC; }
+    public String getTYPE() { return TYPE; }
+
+    // Default interpretation (overridden in subclasses)
+    public String interpretSpec() {
+        return String.valueOf(SPEC);
+    }
+
+    // Inner static Builder
+    public static class Builder {
+        private int ID;
+        private String BRAND;
+        private int SPEC;
+        private String TYPE;
+
+        public Builder setID(int ID) { this.ID = ID; return this; }
+        public Builder setBRAND(String BRAND) { this.BRAND = BRAND; return this; }
+        public Builder setSPEC(int SPEC) { this.SPEC = SPEC; return this; }
+        public Builder setTYPE(String TYPE) { this.TYPE = TYPE; return this; }
+
+        // Build method returns subclass depending on TYPE
+        public Hardware build() {
+            if ("Laptop".equalsIgnoreCase(TYPE)) {
+                return new Laptop(this);
+            } else if ("Phone".equalsIgnoreCase(TYPE)) {
+                return new Phone(this);
+            } else {
+                return new Hardware(this); // fallback
+            }
+        }
+    }
+}
